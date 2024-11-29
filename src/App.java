@@ -53,12 +53,12 @@ public class App {
                     }
                 }
 
-                FileWriter fileToWrite = new FileWriter("./txts/" + nameFile + ".txt");
+                FileWriter fileToWrite = new FileWriter("./txts/" + nameFile.toLowerCase() + ".txt");
                 fileToWrite.write(String.valueOf(fileTxtsArr));
 
                 fileToWrite.close();
             } else {
-                File file = new File("./txts/" + cryptType + "/" + nameFile + ".txt");
+                File file = new File("./txts/" + cryptType + "/" + nameFile.toLowerCase() + ".txt");
 
                 File folder = new File("./txts/" + cryptType + "/");
                 if(!folder.exists())
@@ -71,13 +71,13 @@ public class App {
                     System.out.println("File Created: " + file.getName());   
                 }
 
-                FileWriter fileToWrite = new FileWriter("./txts/" + cryptType + "/" + nameFile + ".txt");
+                FileWriter fileToWrite = new FileWriter("./txts/" + cryptType + "/" + nameFile.toLowerCase() + ".txt");
                 fileToWrite.write(data);
 
                 fileToWrite.close();
             }
 
-            menu(sc);
+            
         } catch (Exception e) {
             System.out.println("Error: " + e);
         }
@@ -96,7 +96,7 @@ public class App {
                 }
                 
                 fileToRead.close();
-                menu(sc);
+                
             }
         } catch (Exception e) {
             System.out.println("Error: " + e);
@@ -120,20 +120,20 @@ public class App {
 
             if (fileType < 1 || fileType > 3) {
                 System.out.println("There is no option less than 0 or greather than 4!\n");
-                menu(sc);
+                
             }
 
             switch (fileType) {
                 case 1:
-                    File fileRead = new File("./txts/" + fileReadName + ".txt");
+                    File fileRead = new File("./txts/" + fileReadName.toLowerCase() + ".txt");
                     returnsReader(sc, fileRead);
                     break;
                 case 2:
-                    File fileReadEncrypt = new File("./txts/encrypt/" + fileReadName + ".txt");
+                    File fileReadEncrypt = new File("./txts/encrypt/" + fileReadName.toLowerCase() + ".txt");
                     returnsReader(sc, fileReadEncrypt);
                     break;
                 case 3:
-                    File fileReadDecrypt = new File("./txts/decrypt/" + fileReadName + ".txt");
+                    File fileReadDecrypt = new File("./txts/decrypt/" + fileReadName.toLowerCase() + ".txt");
                     returnsReader(sc, fileReadDecrypt);
                     break;    
             }
@@ -165,7 +165,7 @@ public class App {
                 }
     
                 fileCryptRead.close();
-                menu(sc);
+                
             }
         } catch (Exception e) {
             System.out.println("Error:" + e);
@@ -180,10 +180,10 @@ public class App {
             String fileNameToCrypt = sc.nextLine();
 
             if(questionToCrypt == "encrypt") {
-                File fileToCrypt = new File("./txts/" + fileNameToCrypt + ".txt");
+                File fileToCrypt = new File("./txts/" + fileNameToCrypt.toLowerCase() + ".txt");
                 encryptOrDecryptCode(sc, fileToCrypt, questionToCrypt);
             } else {
-                File fileToCrypt = new File("./txts/encrypt/" + fileNameToCrypt + ".txt");
+                File fileToCrypt = new File("./txts/encrypt/" + fileNameToCrypt.toLowerCase() + ".txt");
                 encryptOrDecryptCode(sc, fileToCrypt, questionToCrypt);
             } 
         } catch (Exception e) {
@@ -220,40 +220,43 @@ public class App {
     }
 
     public static void menu(Scanner sc) {
-        String[] drawMenu = {"┌────────────────────────┐", "│          Menu          │", "│                        │", "│  1 - Create File       │", "│  2 - Read File         │", "│  3 - Encrypt File      │", "│  4 - Decrypt File      │", "│  0 - Exit              │", "│                        │", "└────────────────────────┘"};
-        for(String i : drawMenu) {
-            System.out.println(i);
+        while (true) {
+            String[] drawMenu = {"┌────────────────────────┐", "│          Menu          │", "│                        │", "│  1 - Create File       │", "│  2 - Read File         │", "│  3 - Encrypt File      │", "│  4 - Decrypt File      │", "│  0 - Exit              │", "│                        │", "└────────────────────────┘"};
+            for (String i : drawMenu) {
+                System.out.println(i);
+            }
+    
+            System.out.print("> ");
+            int choiceMenu = sc.nextInt();
+    
+            if (choiceMenu < 0 || choiceMenu > 4) {
+                System.out.println("There is no option less than 0 or greater than 4!\n");
+                continue;
+            }
+    
+            switch (choiceMenu) {
+                case 0:
+                    System.out.println("Exiting the program...");
+                    return;
+                case 1:
+                    sc.nextLine();
+                    createFile(sc, true, "", "");
+                    break;
+                case 2:
+                    sc.nextLine();
+                    readFile(sc);
+                    break;
+                case 3:
+                    sc.nextLine();
+                    fileEncryptOrDecrypt(sc, true);
+                    break;
+                case 4:
+                    sc.nextLine();
+                    fileEncryptOrDecrypt(sc, false);
+                    break;
+            }
         }
-
-        System.out.print("> ");
-        int choiceMenu = sc.nextInt();
-        
-        if (choiceMenu < 0 || choiceMenu > 4) {
-            System.out.println("There is no option less than 0 or greather than 4!\n");
-            menu(sc);
-        }
-
-        switch (choiceMenu) {
-            case 0:
-                break;
-            case 1:
-                sc.nextLine();
-                createFile(sc, true, "", "");
-                break;
-            case 2:
-                sc.nextLine();
-                readFile(sc);
-                break;
-            case 3:
-                sc.nextLine();
-                fileEncryptOrDecrypt(sc, true);
-                break;
-            case 4:
-                sc.nextLine();
-                fileEncryptOrDecrypt(sc, false);
-                break;
-        }
-    }
+    }    
 
     public static void main(String[] args) throws Exception {
         Scanner sc = new Scanner(System.in);
