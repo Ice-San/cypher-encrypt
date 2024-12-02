@@ -148,19 +148,28 @@ public class App {
                 System.out.println("\nSometing goes Wrong... :(\nFile doesn't exists. Please, create the file first!");
             } else {
                 Scanner fileCryptRead = new Scanner(fileToCrypt);
-    
-                System.out.println("\nWhat's the value of the " + questionToCrypt + " key?");
-                System.out.print("> ");
-                int cryptKey = sc.nextInt();
-                sc.nextLine();
-    
+
                 while(fileCryptRead.hasNextLine()) {
                     String data = fileCryptRead.nextLine();
+                    while (true) {
+                        System.out.println("\nWhat's the value of the " + questionToCrypt + " key?");
+                        System.out.print("> ");
+                        
+                        if (sc.hasNextInt()) {
+                            int cryptKey = sc.nextInt();
+                            sc.nextLine();
 
-                    if(questionToCrypt == "encrypt") {
-                        createFile(sc, false, questionToCrypt, encrypt(data, cryptKey));
-                    } else {
-                        createFile(sc, false, questionToCrypt, decrypt(data, cryptKey));
+                            if(questionToCrypt == "encrypt") {
+                                createFile(sc, false, questionToCrypt, encrypt(data, cryptKey));
+                            } else {
+                                createFile(sc, false, questionToCrypt, decrypt(data, cryptKey));
+                            }
+                            
+                            break;
+                        } else {
+                            System.out.println("ERROR: The value most be a number! >:(");
+                            sc.nextLine();
+                        }
                     }
                 }
     
