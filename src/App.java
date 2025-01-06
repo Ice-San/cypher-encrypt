@@ -30,26 +30,13 @@ public class App {
                 char[] fileTxtsArr = fileTxts.toCharArray();
                 for (int i = 0; i < fileTxtsArr.length; i++) {
                     switch(fileTxtsArr[i]) {
-                        case 160: case 8230: case 198: case 402:
-                            fileTxtsArr[i] = 'a';
-                            break;
-                        case 8218: case 710:
-                            fileTxtsArr[i] = 'e';
-                            break;
-                        case 161:
-                            fileTxtsArr[i] = 'i';
-                            break;
-                        case 162: case 228:
-                            fileTxtsArr[i] = 'o';
-                            break;
-                        case 163:
-                            fileTxtsArr[i] = 'u';
-                            break;
-                        case 8225:
-                            fileTxtsArr[i] = 'c';
-                            break;
-                        default:
-                            break;
+                        case 160, 8230, 198, 402 -> fileTxtsArr[i] = 'a';
+                        case 8218, 710 -> fileTxtsArr[i] = 'e';
+                        case 161 -> fileTxtsArr[i] = 'i';
+                        case 162, 228 -> fileTxtsArr[i] = 'o';
+                        case 163 -> fileTxtsArr[i] = 'u';
+                        case 8225 -> fileTxtsArr[i] = 'c';
+                        default -> {break;}
                     }
                 }
 
@@ -244,25 +231,23 @@ public class App {
             }
     
             switch (choiceMenu) {
-                case 0:
-                    System.out.println("Exiting the program...");
-                    return;
-                case 1:
+                case 0 -> System.out.println("Exiting the program...");
+                case 1 -> {
                     sc.nextLine();
                     createFile(sc, true, "", "");
-                    break;
-                case 2:
+                }
+                case 2 -> {
                     sc.nextLine();
                     readFile(sc);
-                    break;
-                case 3:
+                }
+                case 3 -> {
                     sc.nextLine();
                     fileEncryptOrDecrypt(sc, true);
-                    break;
-                case 4:
+                }
+                case 4 -> {
                     sc.nextLine();
                     fileEncryptOrDecrypt(sc, false);
-                    break;
+                }
             }
         }
     }    
